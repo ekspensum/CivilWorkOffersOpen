@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{home.services}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <div th:utext="${mainPages.content}"></div>  
+
+        </section>
+    </body>
+</html>

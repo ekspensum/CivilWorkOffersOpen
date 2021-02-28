@@ -1,0 +1,17 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="sidemenu">
+        <ul>
+            <li><a th:href="@{/employee/main}" th:text="#{employee.main}"></a></li>
+        </ul>
+        <hr class="divider_horizontal">
+        <ul>
+            <li><a th:href="@{/offerrequest/employee/search}" th:text="#{employee.search}"></a></li>
+            <li><a th:href="@{/offerrequest/employee/newrequest}" th:text="#{employee.newrequest}"></a></li>
+            <li><a th:href="@{/estimate/service}" th:text="#{employee.estimate.service}"></a></li>
+        </ul>
+        <hr class="divider_horizontal">
+        <ul>
+            <li><a th:href="@{/employee/selfedit}" th:text="#{employee.edit.self}"></a></li>
+        </ul>
+    </div>
+</div>

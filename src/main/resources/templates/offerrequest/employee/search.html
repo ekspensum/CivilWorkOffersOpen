@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{employee.search}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="employee/employeeMenu.html" id="employeeMenu"></section>
+            <div id="employeeContent">
+                <h3 th:text="#{employee.search}"></h3>
+                <form th:action="@{/offerrequest/employee/search}" method="POST">
+                    <table>
+                        <tr>
+                            <td th:text="#{offer.request.search.registerdate.from}"></td>
+                            <td><input type="date" name="registerDateFrom" th:value="${registerDateFrom}" id="registerDateFrom"/></td>
+                            <td th:text="#{offer.request.search.registerdate.to}"></td>
+                            <td><input type="date" name="registerDateTo" th:value="${registerDateTo}" id="registerDateTo"/></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.search.execdate.from}"></td>
+                            <td><input type="date" name="execDateFrom" th:value="${execDateFrom}" id="execDateFrom"/></td>
+                            <td th:text="#{offer.request.search.execdate.to}"></td>
+                            <td><input type="date" name="execDateTo" th:value="${execDateTo}" id="execDateTo"/></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.search.text}"></td>
+                            <td colspan="4"><input type="search" name="text" th:value="${text}" th:placeholder="#{offer.request.search.placeholder}" class="field_search"/></td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="4">
+                                <input type="submit" name="search" th:value="#{button.search}" class="button"
+                                       th:onclick="'return validateDateFields(\''+#{alert.field.date}+'\', \'registerDateFrom\', \'registerDateTo\',
+                                       \'execDateFrom\', \'execDateTo\');'" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <form th:action="@{/offerrequest/employee/details}" method="POST">
+                    <table  th:if="${offerRequestsList != null}" class="searched">
+                        <thead th:if="${offerRequestsList.size() != 0}" class="searched">
+                            <tr>
+                                <th th:text="#{number}"></th>
+                                <th th:text="#{offer.request.content}"></th>
+                                <th th:text="#{offer.request.search.customer}"></th>
+                                <th th:text="#{offer.request.search.company}"></th>
+                                <th th:text="#{user.photo}"></th>
+                                <th th:text="#{offer.request.execdate}"></th>
+                                <th th:text="#{offer.request.search.dateregister}"></th>
+                                <th th:text="#{offer.request.search.radio}"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="searched">
+                            <tr th:each="offerRequest, itemStat : ${offerRequestsList}">
+                                <td th:text="${itemStat.count + '. '}"></td>
+                                <td th:text="${offerRequest.offerRequestContent.get(offerRequest.offerRequestContent.size() - 1).content}"></td>
+                                <td th:text="${offerRequest.customer.firstName + ' ' +offerRequest.customer.lastName}"></td>
+                                <td th:text="${offerRequest.customer.companyName}"></td>
+                                <td align="center"> 
+                                    <img th:src="${offerRequest.customer.photo.length} != 0 ? @{'data:image;base64,'+${offerRequest.customer.base64Photo}} : @{/images/alterphoto.jpeg}" 
+                                         width="60px"/>
+                                </td>
+                                <td th:text="${offerRequest.executionDate}"></td>
+                                <td th:text="${offerRequest.registerDateTime.toLocalDate() + ' ' + offerRequest.registerDateTime.toLocalTime()}"></td>
+                                <td align="center">
+                                    <input type="radio" name="offerRequestId" th:value="${offerRequest.id}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody th:if="${offerRequestsList != null}">
+                            <tr th:if="${offerRequestsList.size() == 0}" >
+                                <td th:text="#{offer.request.search.notfound}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td align="right" colspan="8" th:if="${offerRequestsList.size() > 0}">
+                                    <input type="submit" name="select" th:value="#{button.select}" class="button" 
+                                            th:onclick="'return validateSelectRadio(\''+#{alert.radio.empty.item}+'\', \'offerRequestId\');'"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

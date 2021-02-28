@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{offer.request.details}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="customer/customerMenu.html" id="customerMenu"></section>
+            <div id="customerContent">
+                <section th:insert="offerrequest/customer/offerRequestMenu.html" id="offerRequestMenuCustomer"></section>
+                <div th:if="${offerRequest != null}">
+                    <table class="table_std">
+                        <tr>
+                            <td th:text="#{offer.request.execdate}"></td>
+                            <td colspan="2" th:text="${offerRequest.executionDate}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.employee}"></td>
+                            <td th:text="${offerRequest.employee.firstName + ' ' +offerRequest.employee.lastName}"></td>
+                            <td>    
+                                <img th:src="${offerRequest.employee.photo.length} != 0 ? @{'data:image;base64,'+${offerRequest.employee.base64Photo}} : @{/images/alterphoto.jpeg}" 
+                                     width="150px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.registered}"></td>
+                            <td colspan="2" th:text="${offerRequest.registerDateTime.toLocalDate() + ' ' + offerRequest.registerDateTime.toLocalTime()}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.content}"></td>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <th th:text="#{number}"></th>
+                                        <th th:text="#{offer.request.content}"></th>
+                                        <th th:text="#{offer.request.registered}"></th>
+                                        <th th:text="#{offer.request.user}"></th>
+                                    </tr>
+                                    <tr th:each="requestContent, itemStat : ${offerRequest.offerRequestContent}">
+                                        <td th:text="${itemStat.count + '. '}"></td>
+                                        <td th:text="${requestContent.content}"></td>
+                                        <td th:text="${requestContent.registerDateTime.toLocalDate() + ' ' + requestContent.registerDateTime.toLocalTime()}"></td>
+                                        <td th:text="${requestContent.userRegister.username}"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.comment}"></td>
+                            <td colspan="2">
+                                <table>
+                                    <tr th:if="${offerRequest.offerRequestComment.size() > 0}">
+                                        <th th:text="#{number}"></th>
+                                        <th th:text="#{offer.request.comment}"></th>
+                                        <th th:text="#{offer.request.registered}"></th>
+                                        <th th:text="#{offer.request.user}"></th>
+                                    </tr>
+                                    <tr th:each="requestComment, itemStat : ${offerRequest.offerRequestComment}">
+                                        <td th:text="${itemStat.count + '. '}"></td>
+                                        <td th:text="${requestComment.comment}"></td>
+                                        <td th:text="${requestComment.registerDateTime.toLocalDate() + ' ' + requestComment.registerDateTime.toLocalTime()}"></td>
+                                        <td th:text="${requestComment.userRegister.username}"></td>
+                                    </tr>
+                                    <tr th:if="${offerRequest.offerRequestComment.size() == 0}" th:text="#{resource.notfound}"></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{offer.request.attachments}"></td>
+                            <td colspan="2">
+                                <table> 
+                                    <tr th:if="${offerRequest.offerRequestAttachment.size() > 0}">
+                                        <th th:text="#{number}"></th>
+                                        <th th:text="#{file.name}"></th>
+                                        <th th:text="#{file.type}"></th>
+                                        <th th:text="#{file.size}"></th>
+                                        <th th:text="#{file.added}"></th>
+                                        <th th:text="#{file.user}"></th>
+                                    </tr>
+                                    <tr th:each="attachment, itemStat : ${offerRequest.offerRequestAttachment}">
+                                        <td th:text="${itemStat.count + '. '}"></td>
+                                        <td><a th:href="@{'/file/'+${attachment.id}}" target="_blank" th:text="${attachment.fileName}" class="link"></a></td>
+                                        <td th:text="${attachment.fileType}"></td>
+                                        <td th:text="${attachment.fileSize}"></td>
+                                        <td th:text="${attachment.registerDateTime.toLocalDate() + ' ' + attachment.registerDateTime.toLocalTime()}"></td>
+                                        <td th:text="${attachment.userRegister.username}"></td>
+                                    </tr>
+                                    <tr th:if="${offerRequest.offerRequestAttachment.size() == 0}" th:text="#{resource.notfound}"></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div th:unless="${offerRequest != null}">
+                    <p th:text="#{offer.request.select.none}" class="attention"></p>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{employee.edit.self}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="employee/employeeMenu.html" id="employeeMenu"></section>
+            <div id="employeeContent">
+                <h3 th:text="#{employee.edit.self}"></h3>
+                <form th:method="POST"	th:action="@{/employee/selfedit}" th:object="${employee}" enctype="multipart/form-data" id="selfEditEmployeeForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td rowspan="10"><img th:src="${employee.photo.length} != 0 ? @{'data:image;base64,'+${employee.base64Photo}} : @{/images/alterphoto.jpeg}" 
+                                                      th:unless="${employee.photo == null}" width="250px" /></td>
+                                <td th:text="#{user.username}"></td>
+                                <td><input type="text" th:field="*{user.username}" onblur="setEmailField();" id="login"/></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.password}"></td>
+                                <td><input	type="password" th:field="*{user.passwordField}" id="password" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('user.passwordField')}" th:errors="*{user.passwordField}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.password.repet}"></td>
+                                <td><input type="password" name="password2" id="password2" value="${param.password2 }"/></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.firstName}"></td>
+                                <td><input type="text" th:field="*{firstName}" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.lastName}"></td>
+                                <td><input type="text" th:field="*{lastName}" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.pesel}"></td>
+                                <td><input type="text" th:field="*{pesel}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.email}"></td>
+                                <td><input type="text" th:field="*{email}" id="email"/></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.phone}"></td>
+                                <td><input type="text" th:field="*{phone}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.language}"></td>
+                                <td>
+                                    <select th:name="language" th:field="*{language}">
+                                        <option th:each="language : ${languages}" 
+                                                th:value="${language}" 
+                                                th:text="${language}" 
+                                                th:selected="${language == #request.getParameter('language')}">
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.photo}"></td>
+                                <td><input type="file" name="newPhoto" accept="image/*" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><button type="submit" name="selfEdit" value="toEdit" th:text="#{button.edit.self}" form="selfEditEmployeeForm"
+                                            class="button" th:onclick="'return checkCorrectPassword(\''+#{alert.password}+'\');'"></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

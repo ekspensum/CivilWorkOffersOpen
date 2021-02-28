@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{customer.offer.getting}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="customer/customerMenu.html" id="customerMenu"></section>
+            <div id="customerContent">
+                <h3 th:text="#{customer.offer.getting}"></h3>
+                <table th:if="${gettingOfferList.size() > 0}" class="table_std">
+                    <tr>
+                        <th th:text="#{number}"></th>
+                        <th th:text="#{offer.request.content}"></th>
+                        <th th:text="#{offer.request.date}"></th>
+                        <th th:text="#{offer.request.details}"></th>
+                        <th th:text="#{offer.request.search.employee}"></th>
+                        <th th:text="#{user.photo}"></th>
+                        <th th:text="#{offer.content}"></th>
+                        <th th:text="#{offer.sent}"></th>
+                        <th th:text="#{offer.details}"></th>
+                        <th>
+                            <table>
+                                <tr>
+                                    <th th:text="#{number}" class="file_num"></th>
+                                    <th th:text="#{file.name}" class="file_name"></th>
+                                    <th th:text="#{file.type}"class="file_type"></th>
+                                    <th th:text="#{file.size}" class="file_size"></th>
+                                </tr>
+                            </table>
+                        </th>
+                    </tr>
+                    <tr th:each="offer,idx1 : ${gettingOfferList}">
+                        <td th:text="${idx1.count}"></td>
+                        <td th:utext="${offer.offerRequestContent}"></td>
+                        <td th:text="${offer.offerRequestRegister}"></td>
+                        <td align="center">
+                            <form method="POST" th:action="@{/offerrequest/customer/details}" id="offerRequestForm">
+                                <button type="submit" name="offerRequestId" th:value="${offer.offerRequestId}" 
+                                        th:text="#{button.details}" formtarget="_blanc" class="link" form="offerRequestForm">
+                                </button>
+                            </form>
+                        </td>
+                        <td th:text="${offer.offerRequestEmployee}"></td>
+                        <td><img th:src="@{'data:image;base64,'+${offer.employeePhotoBase64}}" width="70px"/></td> 
+                        <td th:utext="${offer.offerContent}"></td>
+                        <td th:utext="${offer.offerSend}"></td>
+                        <td align="center">
+                            <form method="POST" th:action="@{/offer/customer/details}" id="offerForm">
+                                <button type="submit" name="offerId" th:value="${offer.offerId}" th:text="#{button.details}" 
+                                        formtarget="_blanc" class="link" form="offerForm">
+                                </button>
+                            </form>
+                        </td>                        
+                        <td>
+                            <table> 
+                                <tr th:each="pdf,idx2 : ${offer.offerAttachmentDataList}">
+                                    <td th:text="${idx2.count + '. '}" class="file_num"></td>
+                                    <td class="file_name">
+                                        <form method="POST" th:action="@{/offer/customer/file}" id="fileForm">
+                                            <button type="submit" name="attachmentId" th:value="${pdf.attachmentId}" th:text="${pdf.attachmentName}" 
+                                                    formtarget="_blanc" class="link" form="fileForm">
+                                            </button>
+                                        </form>
+                                    </td>  
+                                    <td th:text="${pdf.attachmentType}" class="file_type"></td>
+                                    <td th:text="${pdf.attachmentSize}" class="file_size"></td>
+                                </tr>
+                                <tr th:if="${offer.offerAttachmentDataList.size() == 0}" th:text="#{resource.notfound}"></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <p th:if="${gettingOfferList.size() == 0}" th:text="#{offer.answers.notfound}"></p>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+<div xmlns:th="http://www.thymeleaf.org" >
+    <div>
+        <div class="sidemenu">
+            <ul>
+                <li><a th:href="@{/owner/main}" th:text="#{owner.main}"></a></li>
+            </ul>
+            <hr class="divider_horizontal" >
+            <ul>
+                <li><a th:href="@{/owner/addadmin}" th:text="#{owner.add.admin}"></a></li>
+                <li><a th:href="@{/owner/editadmin}" th:text="#{owner.edit.admin}"></a></li>
+            </ul>
+            <hr class="divider_horizontal" >
+            <ul>
+                <li><a th:href="@{/owner/selfedit}" th:text="#{owner.edit.self}"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

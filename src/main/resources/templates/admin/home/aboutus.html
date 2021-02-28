@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{home.aboutus}"></title>
+        <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <h3 th:text="#{home.aboutus}"></h3>
+            <table>
+                <tr>
+                    <td width="80%">
+                        <form th:action="@{/admin/editaboutus}" method="post" th:object="${mainPages}">
+                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="attention"></p>
+                            <textarea name="content" th:field="*{content}" id="aboutUsContent"></textarea>
+                        </form>
+                    </td>
+                    <td width="20%">
+                        <span th:utext="#{home.editor.help}"></span>
+                    </td>
+                </tr>
+            </table>
+            <script>
+                CKEDITOR.replace('aboutUsContent');
+                CKEDITOR.config.height = '30em';
+            </script>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div>
+        <div class="sidemenu">
+            <ul>
+                <li><a th:href="@{/admin/main}" th:text="#{admin.main}"></a></li>
+            </ul>
+            <hr class="divider_horizontal"/>
+            <ul>
+                <li><a th:href="@{/admin/addemployee}" th:text="#{admin.add.employee}"></a></li>
+                <li><a th:href="@{/admin/editemployee}" th:text="#{admin.edit.employee}"></a></li>
+                <li><a th:href="@{/admin/assignemployee}" th:text="#{admin.assign.employee}"></a></li>
+            </ul>
+            <hr class="divider_horizontal"/>
+            <ul>
+                <li><a th:href="@{/admin/addcustomer}" th:text="#{admin.add.customer}"></a></li>
+                <li><a th:href="@{/admin/editcustomer}" th:text="#{admin.edit.customer}"></a></li>
+                <li><a th:href="@{/admin/removecustomer}" th:text="#{admin.remove.customer}"></a></li>
+            </ul>
+            <hr class="divider_horizontal"/>
+            <ul>
+                <li><a th:href="@{/admin/selfedit}" th:text="#{admin.edit.self}"></a></li>
+            </ul>
+            <hr class="divider_horizontal"/>
+            <ul>
+                <li><a th:href="@{/admin/edithome}" th:text="#{admin.edit.home}"></a></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/admin/editaboutus}" th:text="#{admin.edit.aboutus}"></a></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/admin/portfolio}" th:text="#{admin.edit.portfolio}"></a></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/admin/references}" th:text="#{admin.edit.references}"></a></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/admin/services}" th:text="#{admin.edit.services}"></a></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/admin/logosloganfooter}" th:text="#{admin.edit.logosloganfooter}"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

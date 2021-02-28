@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <title th:text="#{exception}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content" id="content">
+            <h3 th:text="#{exception}"></h3>
+            <p th:text="#{${message}}" th:unless="${message == null}" th:class="${#strings.contains(message, 'defeat') ? 'attention' : 'message'}"></p> 
+            <p th:text="#{${exception}}" th:unless="${exception == null}" class="attention"></p> 
+            <p><img width="250" th:src="@{/images/error.jpg}"/></p>
+        </section>
+    </body>
+</html>

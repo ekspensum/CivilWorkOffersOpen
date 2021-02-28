@@ -1,0 +1,20 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div>
+        <div class="sidemenu">
+            <ul>
+                <li><a th:href="@{/customer/main}" th:text="#{customer.main}"></a></li>
+            </ul>
+            <hr class="divider_horizontal">
+            <ul>
+                <li><a th:href="@{/offerrequest/customer/new}" th:text="#{customer.request}"></a></li>
+                <li><a th:href="@{/offer/customer/answers}" th:text="#{customer.answers}"></a></li>
+                <li><a th:href="@{/offerrequest/customer/myrequests}" th:text="#{customer.myrequests}"></a></li>
+            </ul>
+            <hr class="divider_horizontal">
+            <ul>
+                <li><a th:href="@{/customer/selfedit}" th:text="#{customer.selfedit}"></a></li>
+                <li><a th:href="@{/customer/removecustomer}" th:text="#{customer.remove.account}"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

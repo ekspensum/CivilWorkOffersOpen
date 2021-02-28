@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{offer.request.edit.file}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="customer/customerMenu.html" id="customerMenu"></section>
+            <div id="customerContent">
+                <section th:insert="offerrequest/customer/offerRequestMenu.html" id="offerRequestMenuCustomer"></section>
+                <div th:if="${offerRequest != null}">
+                    <form method="POST" th:action="@{/offerrequest/customer/edit/file}" th:object="${offerRequest}" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td th:text="#{home.contactus.attachment}"></td>
+                                <td><input type="file" th:field="*{attachments}" multiple="multiple" name="files[]" onchange="showUploadFiles(event);"/></td>
+                                <td></td>
+                                <td><span th:if="${#fields.hasErrors('attachments')}" th:errors="*{attachments}" class="attention"></span></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{offer.request.attachments}"></td>
+                                <td>
+                                    <table class="table_std"> 
+                                        <tr th:if="*{offerRequestAttachment.size() > 0}">
+                                            <th th:text="#{number}"></th>
+                                            <th th:text="#{file.name}"></th>
+                                            <th th:text="#{file.type}"></th>
+                                            <th th:text="#{file.size}"></th>
+                                            <th th:text="#{file.added}"></th>
+                                            <th th:text="#{file.user}"></th>
+                                        </tr>
+                                        <tr th:each="attachment, itemStat : *{offerRequestAttachment}">
+                                            <td th:text="${itemStat.count + '. '}"></td>
+                                            <td><a th:href="@{'/file/'+${attachment.id}}" target="_blank" th:text="${attachment.fileName}" class="link"></a></td>
+                                            <td th:text="${attachment.fileType}"></td>
+                                            <td th:text="${attachment.fileSize}"></td>
+                                            <td th:text="${attachment.registerDateTime.toLocalDate() + ' ' + attachment.registerDateTime.toLocalTime()}"></td>
+                                            <td th:text="${attachment.userRegister.username}"></td>
+                                        </tr>
+                                        <tr th:if="*{offerRequestAttachment.size() == 0}" th:text="#{resource.notfound}"></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td id="file_list"></td>    
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" th:value="#{button.send}" class="button" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div th:unless="${offerRequest != null}">
+                    <p th:text="#{offer.request.select.none}" class="attention"></p>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

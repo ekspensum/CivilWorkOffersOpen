@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{admin.add.customer}"></title>
+    </head>
+    <body th:onload="'activeLinkMainMenu();setConstraintCustomerType();'">
+        <section layout:fragment="content">		
+            <section th:insert="admin/adminMenu.html" id="adminMenu"></section>
+            <div id="adminContent">
+                <h3 th:text="#{admin.add.customer}"></h3>
+                <form method="POST"	th:action="@{/admin/addcustomer}" th:object="${customer}" enctype="multipart/form-data">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td th:text="#{user.username}"></td>
+                                <td><input type="text" th:field="*{user.username}" onblur="setEmailField();" id="login"/></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.firstName}"></td>
+                                <td><input type="text" th:field="*{firstName}" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.lastName}"></td>
+                                <td><input type="text" th:field="*{lastName}" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{customer.customerType}"></td>
+                                <td>
+                                    <select th:field="*{customerType.id}" onchange="setConstraintCustomerType();" id="customerTypeId">
+                                        <option th:each="customerType : ${allCustomerTypes}" 
+                                                th:value="${customerType.id}" 
+                                                th:text="#{${customerType.customerTypeDescription}}">
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.companyName}"></td>
+                                <td><input type="text" th:field="*{companyName}" id="companyName" /></td>
+                                <td id="companyNameConstraint"></td>
+                                <td th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" id="companyNameError" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.regon}"></td>
+                                <td><input type="text" th:field="*{regon}" id="regon" /></td>
+                                <td id="regonConstraint"></td>
+                                <td th:if="${#fields.hasErrors('regon')}" th:errors="*{regon}" id="regonError" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.country}"></td>
+                                <td><input type="text" th:field="*{country}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.zipCode}"></td>
+                                <td><input type="text" th:field="*{zipCode}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.city}"></td>
+                                <td><input type="text" th:field="*{city}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.street}"></td>
+                                <td><input type="text" th:field="*{street}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.streetNo}"></td>
+                                <td><input type="text" th:field="*{streetNo}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('streetNo')}" th:errors="*{streetNo}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.unitNo}"></td>
+                                <td><input type="text" th:field="*{unitNo}" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('unitNo')}" th:errors="*{unitNo}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.email}"></td>
+                                <td><input type="text" th:field="*{email}" id="email"/></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.phone}"></td>
+                                <td><input type="text" th:field="*{phone}" /></td>
+                                <td>*</td>
+                                <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.language}"></td>
+                                <td>
+                                    <select th:name="language" th:field="*{language}">
+                                        <option th:each="language : ${languages}" 
+                                                th:value="${language}" 
+                                                th:text="${language}" 
+                                                th:selected="${language == #request.getParameter('language')}">
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{user.photo}"></td>
+                                <td><input type="file" name="photo" accept="image/*" /></td>
+                                <td></td>
+                                <td th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" th:value="#{button.add.customer}" class="button" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+        </section>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{offer.sent}"></title>
+        <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="employee/employeeMenu.html" id="employeeMenu"></section>
+            <div id="employeeContent">
+                <section th:insert="offer/employee/offerMenu.html" id="offerMenuEmployee"></section>
+                <div th:if="${offerRequest != null}">
+                    <form method="POST" th:action="@{/offer/employee/new}" th:object="${offerRequest}">
+                        <p th:text="#{${message}}" th:unless="${message == null}" th:class="${#strings.contains(message, 'defeat') ? 'attention' : 'message'}"></p> 
+                        <table>
+                            <tr>
+                                <td th:text="#{offer.content}"></td>
+                                <td align="right">
+                                    <input type="submit" 
+                                           name="sendOffer" 
+                                           th:value="#{button.send}" 
+                                           th:onclick="'return confirm(\''+#{confirm.send.offer}+'\');'" 
+                                           class="button"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" th:if="${#fields.hasErrors('offer[__${offerIdx}__].content')}" 
+                                    th:errors="*{offer[__${offerIdx}__].content}" class="attention"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><textarea id="offerContent" th:field="*{offer[__${offerIdx}__].content}"></textarea></td>
+                                <td th:if="${offerRequest.offer[__${offerIdx}__].offerAttachment != null}" style="vertical-align:top">
+                                    <table th:if="${offerRequest.offer[__${offerIdx}__].offerAttachment.size() > 0}">
+                                        <thead class="searched">
+                                            <tr>
+                                                <td colspan="6" th:text="#{offer.file.attached}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th th:text="#{number}" class="ord_num"></th>
+                                                <th th:text="#{file.name}" class="file_name"></th>
+                                                <th th:text="#{file.type}" class="file_type"></th>
+                                                <th th:text="#{file.size}" class="file_size"></th>
+                                                <th th:text="#{file.added}" class="file_added"></th>
+                                                <th th:text="#{file.user}" class="file_user"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="searched">
+                                            <tr th:each="pdf,idx : ${offerRequest.offer[__${offerIdx}__].offerAttachment}">
+                                                <td th:text="${idx.count + '. '}" class="ord_num"></td>
+                                                <td class="file_name"><a th:href="@{'/offer/employee/pdf/'+${pdf.id}}" target="_blank" th:text="${pdf.fileName}" class="link"></a></td>
+                                                <td th:text="${pdf.fileType}" class="file_type"></td>
+                                                <td th:text="${pdf.file.length}" class="file_size"></td>
+                                                <td th:text="${pdf.registerDateTime.toLocalDate() + ' ' + pdf.registerDateTime.toLocalTime()}" class="file_added"></td>
+                                                <td th:text="${pdf.employeeRegister.firstName+' '+pdf.employeeRegister.lastName}" class="file_user"></td>                                            
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td th:unless="${offerRequest.offer[__${offerIdx}__].offerAttachment.size() > 0}" style="vertical-align:top;" th:text="#{offer.file.none}" class="attention" ></td>                                
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td th:if="${offerRequest.offer[__${offerIdx}__].offerAttachment == null}" style="vertical-align:top;" th:text="#{offer.file.none}" class="attention" ></td>                                
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div th:unless="${offerRequest != null}">
+                    <p th:text="#{offer.request.select.none}" class="attention"></p>
+                </div>
+            </div>
+            <script>
+                CKEDITOR.replace('offerContent');
+                CKEDITOR.config.height = '25em';
+                CKEDITOR.config.width = '70em';
+            </script>
+        </section>
+    </body>
+</html>

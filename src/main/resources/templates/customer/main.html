@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{customer.main}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="customer/customerMenu.html" id="customerMenu"></section>
+            <div id="customerContent">
+                <h3 th:text="#{customer.main}"></h3>
+                <p class="message"><span th:text="#{customer.main.welcome.offerrequest}"></span>
+                    <span th:text="${totalNoOfCustomerOfferRequests}" th:unless="${totalNoOfCustomerOfferRequests == null}"></span>
+                </p>
+                <p th:utext="#{${message}}" th:unless="${message == null}" th:class="${#strings.contains(message, 'defeat') ? 'attention' : 'message'}"></p> 
+                <p th:utext="${forbiddenCharMessage}" th:unless="${forbiddenCharMessage == null}" class="attention"></p> 
+
+            </div>
+
+        </section>
+    </body>
+</html>

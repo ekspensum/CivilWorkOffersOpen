@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"	
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+    <head>
+        <title>Layout page</title>
+        <meta charset="UTF-8"/>
+        <link th:href="@{/style.css}" type="text/css" rel="stylesheet" media="all" />
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+        <script type="text/javascript" th:src="@{/main.js}"></script>
+        <script src="https://www.google.com/recaptcha/api.js?hl=pl"></script>
+    </head>
+    <body onload="activeLinkMainMenu();">
+        <header id="header">
+            <th:block th:if="${logoSloganFooter != null}">
+                <!-- For <img> below --><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <img th:src="@{'data:image;base64,'+${logoSloganFooter.base64Logo}}"></img>
+                <span th:utext="${logoSloganFooter.slogan}"></span>
+            </th:block>
+        </header>
+        <div sec:authorize="isAuthenticated()" id="logout">
+            <a th:href="@{/logoutpage}"><button th:text="#{button.user.logout}" class="button"></button></a>
+            <span th:text="#{user.logged}"></span>
+            <span sec:authentication="name"></span>
+        </div>
+        <div id="topmenu" class="topmenu">
+            <span sec:authorize="hasRole('ROLE_OWNER')">
+                <a th:href="@{/owner/main}" th:text="#{owner.menu}"></a>
+            </span>
+            <span sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/admin/main}" th:text="#{admin.menu}"></a>
+            </span>
+            <span sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                <a th:href="@{/employee/main}" th:text="#{employee.menu}"></a>
+            </span>
+            <span sec:authorize="hasRole('ROLE_CUSTOMER')">
+                <a th:href="@{/customer/main}" th:text="#{customer.menu}"></a>
+            </span>
+            <a th:href="@{/}" th:text="#{home.home}"></a>
+            <a th:href="@{/aboutus}" th:text="#{home.aboutus}"></a>
+            <a th:href="@{/portfolio}" th:text="#{home.portfolio}"></a>
+            <a th:href="@{/references}" th:text="#{home.references}"></a>
+            <a th:href="@{/services}" th:text="#{home.services}"></a>
+            <a th:href="@{/contactus}" th:text="#{home.contactus}"></a>
+            <a th:href="@{/loginpage}" th:text="#{home.login}"></a>
+        </div>
+        <section id="content" layout:fragment="content">
+            <p>Page content goes here</p>
+        </section>
+        <footer id="footer">
+            <span th:utext="${logoSloganFooter.footer}" th:unless="${logoSloganFooter == null}"></span>
+            <br/>
+            <span th:text="#{home.footer}"></span>
+        </footer>  
+    </body>
+</html>

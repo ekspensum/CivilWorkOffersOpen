@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+        <title th:text="${estimate_details}"></title>
+        <style type='text/css'> 
+            @page {
+                size: A4 portrait;
+                margin-top:1.5cm; 
+                margin-left:1.5cm; 
+                margin-right:1cm; 
+                margin-bottom:1.5cm; 
+            }
+            div.header {
+                display: block; 
+                text-align: center;
+                position: running(header);                
+            }
+            div.footer {
+                display: block; 
+                text-align: center;
+                position: running(footer);
+            }
+            @page {
+                @top-center { 
+                    content: element(header); 
+                }
+            }
+            @page { 
+                @bottom-center { 
+                    content: element(footer);
+                }
+            }
+            #pagenumber:before {
+                content: counter(page); 
+            }
+            #pagecount:before {
+                content: counter(pages);  
+            }
+            * { 
+                font-family: 'Arial Unicode MS'; 
+                font-size: 12px;
+            }
+            table, th, td { 
+                border: 1px solid black; 
+                border-collapse: collapse;
+            }
+            th {
+                text-align: center;
+            }
+            .digit {
+                text-align: right;
+            }
+            .desc {
+                width: 60%;
+            }
+            .unit {
+                text-align: center;
+                width: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header"></div>
+        <div class="footer"><span id="pagenumber"/> / <span id="pagecount"/></div>
+        <div class="content">
+            <table>
+                <tr>
+                    <td th:text="${estimate_description}"></td>
+                    <td th:text="${estimate.description}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${estimate_type}"></td>
+                    <td th:text="${estimate.typeOfCivilWork}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${estimate_date}"></td>
+                    <td th:text="${estimate.lastSaved.toLocalDate()}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${estimate_employee}"></td>
+                    <td th:text="${estimate.employee.firstName+' '+estimate.employee.lastName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${user_companyName}"></td>
+                    <td th:text="${owner.companyName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${user_address}"></td>
+                    <td th:text="${owner.zipCode+' '+owner.city+', '+owner.street+' '+owner.streetNo}"></td>
+                </tr>                
+            </table>
+            <br/>
+            <table>
+                <thead>
+                    <tr>
+                        <th th:text="${number}"></th>
+                        <th th:text="${estimate_item_description}"></th>
+                        <th th:text="${estimate_item_unit}"></th>
+                        <th th:text="${estimate_item_quantity}"></th>
+                        <th th:text="${estimate_item_price}"></th>
+                        <th th:text="${estimate_item_pricetag}"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item, idx : ${estimate.estimateItem}">
+                        <td th:text="${idx.count}" class="unit"></td>
+                        <td th:text="${item.description}" class="desc"></td>
+                        <td th:text="${item.unitOfMeasurement}" class="unit"></td>
+                        <td th:text="${item.quantity}" class="digit"></td>
+                        <td th:text="${item.price}" class="digit"></td>
+                        <td th:text="${item.quantity != null && item.price != null ? #numbers.formatDecimal(item.quantity.multiply(item.price),  1, 'POINT', 2, 'COMMA' ) : ''}" class="digit"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td th:text="${estimate_total}"></td>
+                        <td th:text="${#numbers.formatDecimal(estimateTotalPrice,  1, 'POINT', 2, 'COMMA' )}" class="digit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

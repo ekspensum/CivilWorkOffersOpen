@@ -1,0 +1,104 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="sidebar">
+        <table>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="saveEstimate" th:text="#{button.estimate.save}" 
+                            th:onclick="'return validateEstimateField(\''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td><hr class="divider_horizontal"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="addItem" th:text="#{button.estimate.item.add}" 
+                            th:onclick="'return validateEstimateField(\''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="insertItemAbove" th:text="#{button.estimate.item.insert.above}" 
+                            th:onclick="'return validateSelectRadioItemEstimate(\''+#{alert.radio.empty.item}+'\',
+                            \''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="insertItemBelow" th:text="#{button.estimate.item.insert.below}" 
+                            th:onclick="'return validateSelectRadioItemEstimate(\''+#{alert.radio.empty.item}+'\',
+                            \''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td><hr class="divider_horizontal"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="moveUp" th:text="#{button.estimate.item.move.up}" 
+                            th:onclick="'return validateSelectRadioItemEstimate(\''+#{alert.radio.empty.item}+'\',
+                            \''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="moveDown" th:text="#{button.estimate.item.move.down}" 
+                            th:onclick="'return validateSelectRadioItemEstimate(\''+#{alert.radio.empty.item}+'\',
+                            \''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td><hr class="divider_horizontal"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" form="estimateForm" name="selectOption" value="removeItem" th:text="#{button.estimate.item.remove}" 
+                            th:onclick="'return validateSelectRadioItemEstimateRemove(\''+#{alert.radio.empty.item}+'\',
+                            \''+#{alert.field.between5and255}+'\',
+                            \''+#{alert.field.between3and100}+'\',
+                            \''+#{alert.field.between1and20}+'\',
+                            \''+#{alert.field.number}+'\',
+                            \''+#{alert.field.regex.string}+'\',
+                            \''+#{alert.field.regex.number}+'\');'" class="button">
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

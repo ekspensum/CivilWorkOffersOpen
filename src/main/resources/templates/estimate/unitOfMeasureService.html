@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}" >
+    <head>
+        <meta charset="UTF-8"/>
+        <title th:text="#{estimate.new}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">		
+            <section th:insert="employee/employeeMenu.html" id="employeeMenu"></section>
+            <div id="employeeContent">
+                <section th:insert="estimate/estimateServiceMenu.html" id="estimateServiceMenu"></section>
+                <h3 th:text="#{estimate.service.unit}"></h3>
+                <form method="POST" th:action="@{/estimate/service/unit}" th:object="${unitOfMeasurement}">
+                    <table>
+                        <tr>
+                            <td th:text="#{estimate.service.unit.add}"></td>
+                            <td><input type="text" th:field="*{name}"/></td>
+                            <td>*</td>
+                            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="attention"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right">
+                                <button type="submit" name="swichValue" value="addUnitOfMeasurement" th:text="#{button.add}" class="button"></button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <p th:text="#{estimate.service.unit.delete}"></p>
+                <form method="POST" th:action="@{/estimate/service/unit}">
+                    <table th:if="${allUnitOfMeasurementEmployee.size() >  0}" class="table_std">
+                        <tr>
+                            <th th:text="#{number}"></th>
+                            <th th:text="#{estimate.item.unit}"></th>
+                            <th th:text="#{estimate.date}"></th>
+                            <th th:text="#{button.select}"></th>
+                        </tr>
+                        <tr th:each="unit,idx : ${allUnitOfMeasurementEmployee}">
+                            <td th:align="center" th:text="${idx.count}"></td>
+                            <td th:text="${unit.name}"></td>
+                            <td th:text="${unit.registerDateTime.toLocalDate()}"></td>
+                            <td align="center">
+                                <input type="radio" name="unitOfMeasurementId" th:value="${unit.id}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">
+                                <button type="submit" name="swichValue" value="deleteUnitOfMeasurement" th:text="#{button.delete}" 
+                                    th:onclick="'return validateSelectRadio(\''+#{alert.radio.empty.item}+'\', \'unitOfMeasurementId\');'" class="button">
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>
